@@ -1,0 +1,20 @@
+{% extends 'layouts/base.html' %}
+{% load static i18n %}
+{% block content %}
+
+    <div class="row">
+        {% for row in restaurants %}
+            <div class="col-lg-3">
+                {% if row.photo %}
+                    <img src="{{ row.photo.url }}" alt="{{ row.name }}" class="img-fluid"/>
+                {% else %}
+                    <img src="{% static 'img/no photo.png' %}" alt="{{ row.name }}" class="img-fluid"/>
+                {% endif %}
+                <a href="{% url 'main_menu' row.id %}">{{ row.name }}</a>
+                <div>
+                    Distance: {{ row.distance }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

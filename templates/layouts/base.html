@@ -1,0 +1,52 @@
+{% load static i18n %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django</title>
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-warning">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'main_index' %}">Restaurant</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form action="/" method="get" class="navbar-nav me-auto mb-2 mb-lg-0">
+                <input class="form-control" name="lat"/>
+                <input class="form-control" name="long"/>
+                <button type="submit" class="btn btn-success">GO</button>
+            </form>
+        </div>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-2">
+            <li class="nav-item dropdown">
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">{{ LANGUAGE_CODE }}</a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    {% for l in LANGUAGES %}
+                        <li><a href="/{{ l.0 }}/"
+                               class="dropdown-item{% if l.0 == LANGUAGE_CODE %}active{% endif %}">{{ l.1 }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container mt-3">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="{{ message.tags }}">{{ message }} </div>
+        {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+</div>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.js' %}"></script>
+</body>
+
+</html>

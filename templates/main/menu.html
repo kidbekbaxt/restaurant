@@ -1,0 +1,48 @@
+{% extends 'layouts/base.html' %}
+{% load static i18n %}
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'main_index' %}">{% translate "Bosh sahifa" %}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ restaurant.name }}</li>
+        </ol>
+    </nav>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+            <th>{% translate "ID" %}</th>
+            <th>{% translate "Rasmi" %}</th>
+            <th>{% translate "Ovqat nomi" %}</th>
+            <th>{% translate "Narxi" %}</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for row in menu %}
+            <tr>
+                <td>{{ row.id }}</td>
+                <td>
+                    {% if row.photo %}
+                        <img src="{{ row.photo.url }}" alt="{{ row.name }}" class="img-fluid"/>
+                    {% else %}
+                        <img src="{% static 'img/no photo.png' %}" alt="{{ row.name }}" class="img-fluid"/>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ row.name }}
+                </td>
+                <td>
+                    {{ row.price }}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4">{% translate "Ushbu restaranni oshpazi yo'q" %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+
+    </table>
+{% endblock %}
